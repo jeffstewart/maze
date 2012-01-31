@@ -2,15 +2,15 @@ import copy
 import sys
 
 
-def read_maze():
-    maze = sys.stdin.readlines()
+def read_maze(_stdin=sys.stdin):
+    maze = _stdin.readlines()
     maze = [list(line.strip("\n")) for line in maze]
     return maze
 
 
-def write_maze(maze):
+def write_maze(maze, _stdout=sys.stdout):
     for row in maze:
-        print "".join(row)
+        print >> _stdout, "".join(row)
 
 
 def find_maze_endpoint(maze):
@@ -42,8 +42,6 @@ def solve_maze(maze, start):
 
     maze = copy.deepcopy(maze)
     maze[row][col] = "."
-    write_maze(maze)    #TODO remove
-    print
 
     # Base case solvable
     if start == find_maze_endpoint(maze):
@@ -56,16 +54,17 @@ def solve_maze(maze, start):
             solve_maze(maze, (row, col - 1)))
 
 
+def main(_stdin=sys.stdin, _stdout=sys.stdout):
+    maze = read_maze(_stdin=_stdin)
+    maze = solve_maze(maze, (0, 0))
+    if maze is None:
+        print >> _stdout, "Not solvable"
+    else:
+        write_maze(maze, _stdout=_stdout)
 
 
-
-
-maze = read_maze()
-maze = solve_maze(maze, (0, 0))
-if maze is None:
-    print "Not solvable"
-else:
-    write_maze(maze)
+if __name__ == '__main__':
+    main()
 
 
 
