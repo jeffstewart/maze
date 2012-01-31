@@ -5,10 +5,6 @@ from nose.tools import assert_equal
 import maze
 
 
-def test_true():
-    assert_equal(1, 1)
-
-
 def test_solvable_maze():
 
     input = """\
