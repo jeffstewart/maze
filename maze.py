@@ -20,8 +20,9 @@ def find_maze_endpoint(maze):
 
     """
     row = len(maze) - 1
-    col = len(maze[0]) - 1
-    return (row, col)
+    for i in range(len(maze[row])-1):
+	    if maze[row][i] == " ":
+		return (row, i)
 
 
 def solve_maze(maze, start):
@@ -31,6 +32,9 @@ def solve_maze(maze, start):
 
     """
     row, col = start
+    end = find_maze_endpoint(maze)
+    if end == None:
+	    return None
 
     # Base case not solvable
     try:
@@ -44,7 +48,7 @@ def solve_maze(maze, start):
     maze[row][col] = "."
 
     # Base case solvable
-    if start == find_maze_endpoint(maze):
+    if start == end:
          return maze
 
     # Recursive case
@@ -54,13 +58,28 @@ def solve_maze(maze, start):
             solve_maze(maze, (row, col - 1)))
 
 
+def find_start(maze):
+	"""
+
+	Return the starting point of the maze somewhere along the top row.
+
+	"""
+	for i in range(len(maze[0])-1):
+	    if maze[0][i] == " ":
+		return (0, i)
+
+
 def main(_stdin=sys.stdin, _stdout=sys.stdout):
     maze = read_maze(_stdin=_stdin)
-    maze = solve_maze(maze, (0, 0))
-    if maze is None:
-        print >> _stdout, "Not solvable"
+    start = find_start(maze)
+    if start == None:
+	print >> _stdout, "No start point"
     else:
-        write_maze(maze, _stdout=_stdout)
+	maze = solve_maze(maze, start)
+        if maze is None:
+	    print >> _stdout, "Not solvable"
+        else:
+	    write_maze(maze, _stdout=_stdout)
 
 
 if __name__ == '__main__':

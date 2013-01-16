@@ -29,7 +29,7 @@ X..XX
 XX.XX
 X..XX
 X.XXX
-X....
+X.   
 """
 
     _test_maze_result(input, expected)
@@ -47,7 +47,7 @@ XXXXXXXXX
 XXXXXXXXX
 """
 
-    expected = "Not solvable\n"
+    expected = "No start point\n"
     _test_maze_result(input, expected)
 
 
@@ -55,52 +55,35 @@ def test_unsolvable_start():
 
     # Test the origin is not available.
     input = """\
-X
-
-
-
+XXX
+   
+   
+   
 """
 
-    expected = "Not solvable\n"
+    expected = "No start point\n"
     _test_maze_result(input, expected)
 
+def test_bottom_exit():
 
-#def test_solvable_side():
-#
-#    # Test the end point not available.
-#    input = """\
-#
-#XXXX
-#XXXX
-#XXXX
-#"""
-#
-#    expected = """\
-#....
-#XXXX
-#XXXX
-#XXXX
-#"""
-#
-#    _test_maze_result(input, expected)
-#
-#
-#def test_solvable_bottom():
-#
-#    # Test the end point not available.
-#    input = """\
-# XXX
-# XXX
-# XXX
-# XXX
-#"""
-#
-#    expected = """\
-#.XXX
-#.XXX
-#.XXX
-#.XXX
-#"""
-#
-#   _test_maze_result(input, expected)
-#
+    input = """\
+ XXXX
+  XXX
+X  XX
+XX XX
+X  XX
+X XXX
+X XXX"""
+
+    expected = """\
+.XXXX
+..XXX
+X..XX
+XX.XX
+X..XX
+X.XXX
+X.XXX
+"""
+
+    _test_maze_result(input, expected)
+
