@@ -52,10 +52,19 @@ def solve_maze(maze, start):
          return maze
 
     # Recursive case
-    return (solve_maze(maze, (row + 1, col)) or
-            solve_maze(maze, (row - 1, col)) or
-            solve_maze(maze, (row, col + 1)) or
-            solve_maze(maze, (row, col - 1)))
+    # Use A* algorithm to select which direction to try first
+    if (col - end[1] <= 0):
+        return (solve_maze(maze, (row + 1, col)) or
+                solve_maze(maze, (row, col + 1)) or
+                solve_maze(maze, (row - 1, col)) or
+                solve_maze(maze, (row, col - 1)))
+    else:
+        return (
+                solve_maze(maze, (row + 1, col)) or
+                solve_maze(maze, (row, col - 1)) or
+                solve_maze(maze, (row - 1, col)) or
+                solve_maze(maze, (row, col + 1)))
+
 
 
 def find_start(maze):
