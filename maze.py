@@ -53,17 +53,30 @@ def solve_maze(maze, start):
 
     # Recursive case
     # Use A* algorithm to select which direction to try first
-    if (col - end[1] <= 0):
+    col_diff = (col - end[1])
+    row_diff = (end[0] - row)
+    if ((col_diff <= 0) and (abs(col_diff) <= row_diff)):
         return (solve_maze(maze, (row + 1, col)) or
                 solve_maze(maze, (row, col + 1)) or
+                solve_maze(maze, (row, col - 1)) or
+                solve_maze(maze, (row - 1, col)))
+    elif ((col_diff > 0) and (abs(col_diff) <= row_diff)):
+        return (solve_maze(maze, (row + 1, col)) or
+                solve_maze(maze, (row, col - 1)) or
+                solve_maze(maze, (row, col + 1)) or
+                solve_maze(maze, (row - 1, col)))
+                
+    elif ((col_diff <= 0) and (abs(col_diff) > row_diff)):
+        return (solve_maze(maze, (row, col + 1)) or
+                solve_maze(maze, (row + 1, col)) or
                 solve_maze(maze, (row - 1, col)) or
                 solve_maze(maze, (row, col - 1)))
-    else:
-        return (
+    elif ((col_diff > 0) and (abs(col_diff) > row_diff)):
+        return (solve_maze(maze, (row, col - 1)) or
                 solve_maze(maze, (row + 1, col)) or
-                solve_maze(maze, (row, col - 1)) or
-                solve_maze(maze, (row - 1, col)) or
-                solve_maze(maze, (row, col + 1)))
+                solve_maze(maze, (row, col + 1)) or
+                solve_maze(maze, (row - 1, col)))
+                
 
 
 
